@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Danh số 20 số Fibonacci</h1>
+<p id ="status"></p>
+<script>
+    let n = prompt("Nhap n")
+    function getStatus(n) {
+        let fib = [0,1];
+        for(let i = 2;i<n;i++){
+            fib[i] = fib[i-1] + fib[i-2];
+        }
+        return fib;
+
+    }
+    const fist20f = getStatus(n);
+   const output = document.getElementById('status');
+   output.textContent = fist20f.join(', ')
+</script>
+</body>
+</html>

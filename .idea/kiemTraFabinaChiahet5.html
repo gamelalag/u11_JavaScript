@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm số Fibonacci chia hết cho 5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        #resultArea {
+            margin-top: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #008000; /* Màu xanh lá cho kết quả */
+            background-color: #e8ffe8;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #sequenceLog {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+            white-space: pre-wrap; /* Giữ định dạng xuống dòng */
+            max-height: 200px;
+            overflow-y: auto; /* Thêm thanh cuộn nếu danh sách dài */
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Tìm số Fibonacci đầu tiên (không phải 0) chia hết cho 5</h1>
+    <p>Chương trình JavaScript bên dưới sẽ chạy và tìm ra số đó.</p>
+
+    <div id="resultArea">
+        <!-- Kết quả sẽ được hiển thị ở đây -->
+    </div>
+
+    <h3>Quá trình kiểm tra các số:</h3>
+    <div id="sequenceLog">
+        <!-- Các số được kiểm tra sẽ được ghi log tại đây -->
+    </div>
+</div>
+
+<script>
+    function findFirstFibonacciDivisibleByFive() {
+        let num1 = 0;
+        let num2 = 1;
+        let currentFib = 0;
+        const logElement = document.getElementById('sequenceLog');
+        let logText = "";
+
+        while (true) {
+            currentFib = num1 + num2;
+            num1 = num2;
+            num2 = currentFib;
+
+            logText += "Kiểm tra: " + currentFib + "\n";
+            // Cập nhật log trực tiếp trong HTML (có thể hơi chậm với dãy rất dài,
+            // nhưng hiệu quả với bài toán này)
+            logElement.textContent = logText;
+
+            // Kiểm tra điều kiện chia hết cho 5
+            if (currentFib % 5 === 0) {
+                return currentFib; // Trả về và dừng hàm
+            }
+
+            // Giới hạn vòng lặp để tránh chạy mãi mãi nếu có lỗi logic,
+            // bỏ qua đoạn này nếu bạn tự tin vào logic của mình
+            // if (currentFib > 100000) break;
+        }
+    }
+
+    // Chạy hàm khi trang web tải xong và hiển thị kết quả
+    const theNumber = findFirstFibonacciDivisibleByFive();
+    document.getElementById('resultArea').textContent =
+        "Số tìm được là: " + theNumber;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Đoán Số</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        #playButton {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #playButton:hover {
+            background-color: #0056b3;
+        }
+        #messageArea {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #333;
+            min-height: 1em; /* Giữ không gian cho thông báo */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Game Đoán Số</h1>
+    <button id="playButton" onclick="startGame()">Chơi</button>
+    <div id="messageArea"></div>
+</div>
+
+<script>
+    // Các biến toàn cục để lưu trạng thái game
+    let secretNumber;
+    let attemptsLeft;
+    let maxRange;
+
+    // Hàm chính bắt đầu trò chơi khi nhấn nút "Chơi"
+    function startGame() {
+        const messageArea = document.getElementById('messageArea');
+        messageArea.textContent = ""; // Xóa thông báo cũ
+
+        // 1. Yêu cầu người dùng nhập khoảng đoán (ví dụ: 100)
+        const rangeInput = prompt("Bạn muốn đoán số trong khoảng từ 1 đến bao nhiêu? (Ví dụ: Nhập 100)");
+
+        // Kiểm tra đầu vào hợp lệ
+        maxRange = parseInt(rangeInput);
+        if (isNaN(maxRange) || maxRange < 1) {
+            alert("Khoảng không hợp lệ. Vui lòng nhập một số nguyên dương.");
+            return; // Dừng hàm nếu đầu vào sai
+        }
+
+        // 2. Chọn số ngẫu nhiên trong khoảng từ 1 đến maxRange
+        secretNumber = Math.floor(Math.random() * maxRange) + 1;
+        attemptsLeft = 3; // Reset số lần đoán
+
+        alert(`Trò chơi bắt đầu! Tôi đã chọn một số bí mật từ 1 đến ${maxRange}. Bạn có ${attemptsLeft} lần đoán.`);
+
+        // Bắt đầu vòng đoán đầu tiên
+        promptGuess();
+    }
+
+    // Hàm xử lý việc đoán số của người dùng
+    function promptGuess() {
+        if (attemptsLeft <= 0) {
+            // Logic này thường được gọi sau khi xử lý lượt đoán cuối cùng bị sai
+            return;
+        }
+
+        let guess;
+        let isValidInput = false;
+
+        // Vòng lặp để đảm bảo người dùng nhập số hợp lệ hoặc nhấn Hủy
+        while (!isValidInput) {
+            guess = prompt(`Lần đoán còn lại: ${attemptsLeft}. Nhập số bạn đoán (từ 1 đến ${maxRange}):`);
+
+            // Nếu người dùng nhấn Hủy
+            if (guess === null) {
+                document.getElementById('messageArea').textContent = "Bạn đã hủy trò chơi.";
+                return; // Kết thúc hàm promptGuess
+            }
+
+            // Chuyển đổi sang số nguyên và kiểm tra tính hợp lệ
+            const userGuess = parseInt(guess);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > maxRange) {
+                alert(`Vui lòng nhập một số hợp lệ trong khoảng từ 1 đến ${maxRange}.`);
+            } else {
+                isValidInput = true;
+                // Xử lý logic so sánh chỉ khi đầu vào hợp lệ
+                handleGuess(userGuess);
+            }
+        }
+    }
+
+    // Hàm so sánh kết quả
+    function handleGuess(userGuess) {
+        attemptsLeft--;
+
+        if (userGuess === secretNumber) {
+            // Nếu đúng
+            document.getElementById('messageArea').textContent =
+                `Chúc mừng! Bạn đã đoán đúng số bí mật là ${secretNumber}!`;
+            // alert(`Chúc mừng! Bạn đã đoán đúng số bí mật là ${secretNumber}!`);
+            // Kết thúc lượt chơi (không gọi lại promptGuess)
+        } else if (userGuess > secretNumber) {
+            // Nếu lớn hơn
+            if (attemptsLeft > 0) {
+                alert(`Số bạn đoán (${userGuess}) lớn hơn số bí mật. Vui lòng thử lại.`);
+                promptGuess(); // Cho phép đoán lại
+            } else {
+                // Hết lượt
+                document.getElementById('messageArea').textContent =
+                    `Bạn đã hết 3 lượt đoán. Số bí mật là ${secretNumber}.`;
+                // alert(`Bạn đã hết 3 lượt đoán. Số bí mật là ${secretNumber}.`);
+            }
+        } else {
+            // Nếu bé hơn
+            if (attemptsLeft > 0) {
+                alert(`Số bạn đoán (${userGuess}) bé hơn số bí mật. Vui lòng thử lại.`);
+                promptGuess(); // Cho phép đoán lại
+            } else {
+                // Hết lượt
+                document.getElementById('messageArea').textContent =
+                    `Bạn đã hết 3 lượt đoán. Số bí mật là ${secretNumber}.`;
+                // alert(`Bạn đã hết 3 lượt đoán. Số bí mật là ${secretNumber}.`);
+            }
+        }
+    }
+</script>
+</body>
+</html>

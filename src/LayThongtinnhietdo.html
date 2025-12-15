@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 2: Kiểm tra nhiệt độ</title>
+</head>
+<body>
+
+<h2>Chương trình kiểm tra nhiệt độ</h2>
+<p id="status">Vui lòng nhập nhiệt độ hợp lệ (từ 20 đến 100).</p>
+
+<script>
+    let temperature;
+
+    while (temperature > 100 || temperature < 20 || isNaN(temperature)) {
+        temperature = prompt("Nhập nhiệt độ hiện tại (độ C):");
+
+        temperature = Number(temperature);
+
+        if (isNaN(temperature)) {
+            alert("Đây không phải là một số hợp lệ. Vui lòng nhập lại.");
+        } else if (temperature > 100) {
+            alert("Nhiệt độ quá cao (" + temperature + "°C). Yêu cầu người dùng giảm nhiệt độ!");
+        } else if (temperature < 20) {
+            alert("Nhiệt độ quá thấp (" + temperature + "°C). Yêu cầu người dùng tăng nhiệt độ!");
+        }
+    }
+
+    // Khi vòng lặp kết thúc, nhiệt độ đã hợp lệ.
+    document.getElementById('status').textContent = "Nhiệt độ hợp lệ đã được nhập: " + temperature + "°C.";
+
+</script>
+
+</body>
+</html>

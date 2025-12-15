@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 1: Đếm và Thông báo</title>
+</head>
+<body>
+
+<h2>Đang đếm từ 1 đến 100...</h2>
+<p id="output">Các số đã đếm: </p>
+
+<script>
+    // Lấy tham chiếu đến phần tử p có id là 'output' để hiển thị kết quả
+    const outputElement = document.getElementById('output');
+
+    // Bắt đầu vòng lặp từ i = 1 đến i = 100
+    for (let i = 1; i < 100; i++) {
+        // Hiển thị số hiện tại trên trang web (tuỳ chọn)
+        outputElement.textContent += i + " ";
+
+        // Kiểm tra nếu số hiện tại là 99
+        if (i === 99) {
+            // Hiển thị hộp thoại thông báo (alert box)
+            alert("Đã hoàn thành việc đếm đến 99!");
+        }
+    }
+</script>
+
+</body>
+</html>
