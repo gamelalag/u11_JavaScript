@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tìm số nguyên tố </title>
+</head>
+<body>
+<h1>Tìm số nguyên tố nhỏ hơn N :</h1>
+<input type="number" id="inputN" min="2" value="2">
+<button onclick="timSoNt()">Tìm</button>
+<h2>Ket qua :</h2>
+<div id="ketQua">
+
+</div>
+<script>
+function isPrime(num){
+    if (num <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++){
+        if(num % i === 0) return false;
+    }
+    return true;
+
+}
+function timSoNt(){
+    const inputE = document.getElementById('inputN');
+    const ketQua = document.getElementById('ketQua');
+    const N = parseInt(inputE.value);
+    if (isNaN(N) || N<=1){
+        ketQua.textContent = "Vui long nhap lai so hop le :"
+        return;
+    }
+    let cacSoNt= []
+    for(let i =2;i < N;i++){
+        if (isPrime(i)){
+            cacSoNt.push(i);
+        }
+    }
+    if (cacSoNt.length > 0){
+        ketQua.textContent = cacSoNt.join(' ');
+
+    }else{
+        ketQua.textContent ='khong co so nguyen to nao nho hon'
+    }
+}
+</script>
+</body>
+</html>

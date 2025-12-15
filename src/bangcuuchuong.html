@@ -5,15 +5,32 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Bảng Cửu Chương</h1>
+<div id="bang-cuu-chuong-container">
+</div>
+
+<script src="script.js"></script>
 <script>
-    document.write("<div>");
-        document.write("<h1>Bảng cửu chương</h1>");
-        for(let i=1;i <10;i++){
-            for(let j=1;j<10;j++){
-                document.write(i," x " +j," = ",i*j ,"<br>");
+    function taoBangCuuChuongHTML() {
+        const container = document.getElementById('bang-cuu-chuong-container');
+        let htmlOutput = '';
+
+        for (let i = 1; i < 10; i++) {
+            htmlOutput += `<h3>Bảng nhân ${i}</h3><ul>`;
+            for (let j = 1; j < 10; j++) {
+                const ketQua = i * j;
+                htmlOutput += `<li>${i} x ${j} = ${ketQua}</li>`;
             }
+            htmlOutput += '</ul>';
         }
-        document.write("</div>");
+
+        // Chèn chuỗi HTML đã tạo vào trong phần tử container
+        container.innerHTML = htmlOutput;
+    }
+
+    // Gọi hàm khi trang web tải xong
+    taoBangCuuChuongHTML();
+
 </script>
 </body>
 </html>
